@@ -1,41 +1,26 @@
-import asyncio
-import logging
-from aiogram import Bot, Dispatcher, executor, types
-from util import HELP_ANSWER, START_ANSWER, TOKEN
-
-
-
-bot = Bot(TOKEN)
-dp = Dispatcher(bot)
-logging.basicConfig(level=logging.INFO)
-log = logging.getLogger(__name__)
-
+from aiogram import executor, types
+from load_bot import dp
+from logger import log
+from util import HELP_ANSWER, START_ANSWER, UNKNOW_DATA_ANSWER
+from currency_parser import parse_rub
 
 async def on_startup(_):
     log.info("Bot is running")
 
 @dp.message_handler(commands=["start"])
 async def start(message: types.Message):
-    """
-        Обрабатывает /start команду
-    """
-    await message.answer(START_ANSWER)
+    await message.answer(START_ANSWER + "p")
     await message.delete()
 
 @dp.message_handler(commands=["help"])
 async def help(message: types.Message):
-    """
-        Обрабатывает /help команду
-    """
-    await message.answer(HELP_ANSWER)
+    await message.answer(HELP_ANSWER + "p")
 
-@dp.message_handler()
-async def unknow_data(message: types.Message):
-    """
-        Обрабатывает неизвестные команды
-    """
-    await message.reply("Я не знаю такую команду!")
-
+# ! Функция для теста обращения к апи
+@dp.message_handler(commands=['getdata'])
+async def test_parser(message: types.Message):
+    test = await parse_rub()
+    await message.answer(f"test: {test}")
 
 if __name__ == "__main__":
     executor.start_polling(dp, on_startup=on_startup, skip_updates=True)

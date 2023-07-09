@@ -4,4 +4,5 @@ from dotenv import load_dotenv
 load_dotenv()
 
 TOKEN = os.getenv("TOKEN") 
-URL = "https://api.exchangerate-api.com/v4/latest/RUB"
+ADMIN_ID = os.getenv("ADMIN_ID")
+URL = os.getenv("URL")
