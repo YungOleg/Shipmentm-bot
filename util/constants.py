@@ -1,6 +1,7 @@
-HELP_ANSWER = """
+import os
+from dotenv import load_dotenv
 
-"""
-START_ANSWER = """
+load_dotenv()
 
-"""
+TOKEN = os.getenv("TOKEN") 
+URL = "https://api.exchangerate-api.com/v4/latest/RUB"
