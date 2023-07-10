@@ -1,9 +1,8 @@
 HELP_ANSWER = """
-
+Обработка команды /help
 """
 START_ANSWER = """
-
+Обработка команды /start
 """
-UNKNOW_DATA_ANSWER = """
-
-"""
+MAKE_ORDER_BUTTON = "Сделать заказ"
+CONSULTATION_BUTTON = "Консультация"

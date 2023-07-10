@@ -1,14 +1,13 @@
 import aiohttp
 import asyncio
 import json
-import logging
 from typing import Optional, Dict
-from util.constants import URL
+from util import URL
 from logger import log
-# TODO from aiocron import crontab
+# TODO: from aiocron import crontab
 
 
-# TODO @crontab('0 0 */24 * *') 
+# TODO: @crontab('0 0 */24 * *') 
 async def parse_rub() -> Optional[Dict[str, float]]:
     """
         Функция для парсинга курса валют(доллар и евро), выполняется 1 раз в день
@@ -17,7 +16,7 @@ async def parse_rub() -> Optional[Dict[str, float]]:
     if data is not None:
         usd = format(1 / float(json.dumps(data["rates"]["USD"])), ".2f")
         eur = format(1 / float(json.dumps(data["rates"]["EUR"])), ".2f")
-        log.info("data is not empty")
+        log.info("Request successful")
         return {"usd" : usd, "eur": eur}
     return None
 
