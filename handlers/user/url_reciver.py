@@ -1,0 +1,32 @@
+import validators
+from aiogram import types
+from aiogram.dispatcher.filters import Text
+from aiogram.dispatcher import FSMContext
+from aiogram.dispatcher.filters.state import State, StatesGroup
+from load_bot import dp
+from util import SEND_LINK_BUTTON
+from keyboards import make_order_keyboard
+
+
+class Wait_link(StatesGroup):
+    waiting_for_link = State()
+
+
+@dp.message_handler(state=Wait_link.waiting_for_link)
+async def process_link(message: types.Message, state: FSMContext):
+    link = message.text
+    if validators.url(link):
+        await message.answer('Ссылка успешно отправлена!')
+        await state.finish()
+    else:
+        await message.answer('Некорректная ссылка!')
+        await Wait_link.waiting_for_link.set()
+
+
+@dp.message_handler(Text(equals=SEND_LINK_BUTTON))
+async def send_link(message: types.Message):
+    """
+        Функция для приема ссылок от пользователей
+    """
+    await Wait_link.waiting_for_link.set()
+    await message.answer("Отправьте ссылку на товар", reply_markup=make_order_keyboard)
