@@ -22,3 +22,9 @@ calculate_cost_button = KeyboardButton(CALCULATE_COST_BUTTON)
 consultation_keyboard.add(message_to_admin_button)
 consultation_keyboard.add(calculate_cost_button)
 consultation_keyboard.add(back_button)
+
+admin_keyboard = ReplyKeyboardMarkup(resize_keyboard=True)
+# Кнопки: 
+# 1. посмотреть статистику(все заказы)
+# 2. посмотреть оплаченные заказы
+# 3. посмотреть неоплаченные заказы

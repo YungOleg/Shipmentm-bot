@@ -3,23 +3,27 @@ from aiogram import types
 from aiogram.dispatcher.filters import Text
 from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters.state import State, StatesGroup
-from load_bot import dp
-from util import SEND_LINK_BUTTON
+from bot import dp
+from util import SEND_LINK_BUTTON, BACK_BUTTON
 from keyboards import make_order_keyboard
+from handlers.default_handlers import back_to_main_menu
 
 
 class Wait_link(StatesGroup):
     waiting_for_link = State()
 
-
 @dp.message_handler(state=Wait_link.waiting_for_link)
 async def process_link(message: types.Message, state: FSMContext):
     link = message.text
+    if link == BACK_BUTTON:
+        await state.finish() 
+        await back_to_main_menu(message)
+        return
     if validators.url(link):
         await message.answer('Ссылка успешно отправлена!')
         await state.finish()
     else:
-        await message.answer('Некорректная ссылка!')
+        await message.answer('Некорректная ссылка! Отправьте ссылку заново')
         await Wait_link.waiting_for_link.set()
 
 
