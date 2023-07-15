@@ -1,8 +1,8 @@
 from aiogram import types
 from aiogram.dispatcher.filters import Text
 from bot import dp
-from util import START_ANSWER, HELP_ANSWER, BACK_BUTTON
-from keyboards import main_keyboard
+from util.string_resources import START_ANSWER, HELP_ANSWER, BACK_BUTTON
+from keyboards.keyboards import main_keyboard
 
 
 @dp.message_handler(commands=["start"])

@@ -2,7 +2,7 @@ import asyncio
 from aiogram import executor, types
 from bot import dp, bot
 from logger import log
-from currency_parser import parse_rub #? переместить в user(calculate cost)
+from currency_parser.currency_parser import parse_rub #? переместить в user(calculate cost)
 from handlers import *
 
 

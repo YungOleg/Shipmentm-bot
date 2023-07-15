@@ -1,5 +1,5 @@
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
-from util import (MAKE_ORDER_BUTTON, CONSULTATION_BUTTON, 
+from util.string_resources import (MAKE_ORDER_BUTTON, CONSULTATION_BUTTON, 
                   MESSAGE_TO_ADMIN_BUTTON, CALCULATE_COST_BUTTON, 
                   SEND_LINK_BUTTON, BACK_BUTTON)
 

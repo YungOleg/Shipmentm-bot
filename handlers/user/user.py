@@ -1,8 +1,8 @@
 from aiogram import types
 from aiogram.dispatcher.filters import Text
 from bot import dp
-from keyboards import main_keyboard, make_order_keyboard, consultation_keyboard
-from util import (MAKE_ORDER_BUTTON, CONSULTATION_BUTTON, 
+from keyboards.keyboards import main_keyboard, make_order_keyboard, consultation_keyboard
+from util.string_resources import (MAKE_ORDER_BUTTON, CONSULTATION_BUTTON, 
                   MESSAGE_TO_ADMIN_BUTTON, CALCULATE_COST_BUTTON)
 
 

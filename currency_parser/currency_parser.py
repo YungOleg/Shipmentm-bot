@@ -1,13 +1,12 @@
 import aiohttp
-import asyncio
 import json
 from typing import Optional, Dict
-from util import URL
+from util.constants import URL
 from logger import log
-# TODO: from aiocron import crontab
+from aiocron import crontab
 
 
-# TODO: @crontab('0 0 */24 * *') 
+@crontab('0 0 */24 * *') 
 async def parse_rub() -> Optional[Dict[str, float]]:
     """
         Функция для парсинга курса валют(доллар и евро), выполняется 1 раз в день

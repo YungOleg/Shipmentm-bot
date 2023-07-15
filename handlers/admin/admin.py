@@ -1,4 +1,4 @@
-from util import ADMIN_ID
+from util.constants import ADMIN_ID
 from bot import dp
 from aiogram import types
 
