@@ -1,9 +1,9 @@
-import os
+from os import getenv
 from dotenv import load_dotenv
 from typing import Final
 
 load_dotenv()
 
-TOKEN: Final = os.getenv("TOKEN") 
-ADMIN_ID: Final = os.getenv("ADMIN_ID")
-URL: Final = os.getenv("URL")
+TOKEN: Final = getenv("TOKEN") 
+ADMIN_ID: Final = getenv("ADMIN_ID")
+URL: Final = getenv("URL")

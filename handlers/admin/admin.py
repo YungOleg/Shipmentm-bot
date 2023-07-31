@@ -1,5 +1,5 @@
 from util.constants import ADMIN_ID
-from bot import dp
+from bot_config import dp
 from aiogram import types
 
 @dp.message_handler(commands=["admin"], user_id=ADMIN_ID)
