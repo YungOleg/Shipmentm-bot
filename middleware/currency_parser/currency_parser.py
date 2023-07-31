@@ -2,7 +2,7 @@ import aiohttp
 import json
 from typing import Optional, Dict
 from util.constants import URL
-from logger import log
+from log_config import log
 from aiocron import crontab
 
 
