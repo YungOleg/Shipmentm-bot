@@ -1,6 +1,8 @@
 from sqlalchemy import URL
-from constants import (DRIVER_NAME, DB_USER, 
-    DB_PASSWORD, DB_NAME, DB_PORT, DB_HOST)
+from util import (
+    DRIVER_NAME, DB_USER, 
+    DB_PASSWORD, DB_NAME, DB_PORT, DB_HOST
+    )
 
 
 POSTGRESQL_URL = URL.create(
