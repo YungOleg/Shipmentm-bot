@@ -8,6 +8,8 @@ from util.string_resources import BACK_BUTTON, SEND_LINK_BUTTON
 from keyboards.keyboards import make_order_keyboard
 from handlers.default_handlers import back_to_main_menu
 
+from data.order_links import get_unpaid_orders
+
 
 class Wait_link(StatesGroup):
     waiting_for_link = State()
@@ -21,6 +23,12 @@ async def process_link(message: types.Message, state: FSMContext):
         return
     if validators.url(link):
         await message.answer('Ссылка успешно отправлена!')
+        await get_unpaid_orders(
+            user_id=message.from_user.id,
+            link=link,
+            user_name=message.from_user.username, 
+            session_maker=session_maker
+        )
         await state.finish()
     else:
         await message.answer('Некорректная ссылка! Отправьте ссылку заново')

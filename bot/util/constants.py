@@ -7,6 +7,7 @@ load_dotenv()
 TOKEN: Final = getenv("TOKEN") 
 ADMIN_ID: Final = getenv("ADMIN_ID")
 URL: Final = getenv("URL")
+
 DRIVER_NAME: Final = "postgresql+asyncpg"
 DB_HOST: Final = "localhost"
 DB_USER: Final = getenv("DB_USER")

@@ -8,10 +8,11 @@ from handlers import *
 from data import BaseModel, OrderLinks, create_async_engine, processed_schemas, get_session_maker
 
 # * ---------------------------------------------------------------- #
-# !TODO_list:
+# ? TODO_list:
 # TODO 1. добавить базу данных
 # TODO 2. добаить faq
-
+# TODO 3. адаптировать template для shipM бота
+# TODO 4. разделить создание клавиатур + сделать admin_keyboard
 # * ---------------------------------------------------------------- #
 
 async def on_startup(_):
@@ -28,7 +29,8 @@ async def start_bot() -> None:
     session_maker = get_session_maker(async_engine)
     await processed_schemas(async_engine, BaseModel.metadata)
     
-    await dp.start_polling(bot)
+    await dp.start_polling(bot=bot, session_maker=session_maker)
+    
     # executor.start_polling(
     #     dp, 
     #     on_startup=on_startup, 

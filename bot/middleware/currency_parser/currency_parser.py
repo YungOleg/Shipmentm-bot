@@ -8,6 +8,7 @@ from aiocron import crontab
 
 @crontab('0 0 */24 * *') 
 async def parse_rub() -> Optional[Dict[str, float]]:
+    # TODO: посмотреть документацию aiocron и сделать вызов функции в хэндлере
     """
         Функция для парсинга курса валют(доллар и евро), выполняется 1 раз в день
     """
