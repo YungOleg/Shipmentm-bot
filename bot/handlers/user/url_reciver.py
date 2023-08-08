@@ -3,19 +3,20 @@ from aiogram import types
 from aiogram.dispatcher.filters import Text
 from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters.state import State, StatesGroup
+from sqlalchemy.ext.asyncio import AsyncSession
 from bot_config import dp
 from util.string_resources import BACK_BUTTON, SEND_LINK_BUTTON
 from keyboards.keyboards import make_order_keyboard
 from handlers.default_handlers import back_to_main_menu
 
-from data.order_links import get_unpaid_orders
+from data.order_links import add_order_link
 
 
 class Wait_link(StatesGroup):
     waiting_for_link = State()
 
 @dp.message_handler(state=Wait_link.waiting_for_link)
-async def process_link(message: types.Message, state: FSMContext):
+async def process_link(message: types.Message, state: FSMContext, session_maker: AsyncSession):
     link = message.text
     if link == BACK_BUTTON:
         await state.finish() 
@@ -23,17 +24,16 @@ async def process_link(message: types.Message, state: FSMContext):
         return
     if validators.url(link):
         await message.answer('Ссылка успешно отправлена!')
-        await get_unpaid_orders(
+        await add_order_link(
             user_id=message.from_user.id,
             link=link,
-            user_name=message.from_user.username, 
+            user_name=message.from_user.username,
             session_maker=session_maker
         )
         await state.finish()
     else:
         await message.answer('Некорректная ссылка! Отправьте ссылку заново')
         await Wait_link.waiting_for_link.set()
-
 
 @dp.message_handler(Text(equals=SEND_LINK_BUTTON))
 async def send_link(message: types.Message):

@@ -5,6 +5,7 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.future import select
 from log_config import log
 
+
 class OrderLinks(BaseModel):
     __tablename__ = 'order_links'
     id = Column(Integer, primary_key=True, autoincrement=True, nullable=False, unique=True)
@@ -40,6 +41,6 @@ async def get_unpaid_orders(session_maker: sessionmaker):
         async with session.begin():
             result = await session.execute(
                 select(OrderLinks.link, OrderLinks.user_name)
-                    .filter(OrderLinks.is_paid == False)
+                    .where(OrderLinks.is_paid == False)
             )
             return result.all()

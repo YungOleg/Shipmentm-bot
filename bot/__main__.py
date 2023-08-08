@@ -4,16 +4,12 @@ from util import POSTGRESQL_URL
 from bot_config import dp, bot
 from log_config import log
 # from middleware.currency_parser import parse_rub #? переместить в user(calculate cost)
+from handlers.user.commands_description import COMMANDS_DESCRIPRION
+from aiogram.types import BotCommand
+
 from handlers import *
 from data import BaseModel, OrderLinks, create_async_engine, processed_schemas, get_session_maker
 
-# * ---------------------------------------------------------------- #
-# ? TODO_list:
-# TODO 1. добавить базу данных
-# TODO 2. добаить faq
-# TODO 3. адаптировать template для shipM бота
-# TODO 4. разделить создание клавиатур + сделать admin_keyboard
-# * ---------------------------------------------------------------- #
 
 async def on_startup(_):
     log.info("Bot is running")
@@ -25,11 +21,20 @@ async def on_startup(_):
 #     await message.answer(f"test: {test}")
 
 async def start_bot() -> None:
+    cmd_description = [
+        BotCommand(command=cmd[0], description=cmd[1]) for cmd in COMMANDS_DESCRIPRION
+        ]
+    
+    await bot.set_my_commands(commands=cmd_description)
+    
     async_engine = create_async_engine(POSTGRESQL_URL)
     session_maker = get_session_maker(async_engine)
     await processed_schemas(async_engine, BaseModel.metadata)
     
-    await dp.start_polling(bot=bot, session_maker=session_maker)
+    await dp.start_polling(
+        bot,
+        # session_maker=session_maker
+        )
     
     # executor.start_polling(
     #     dp, 
