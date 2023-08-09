@@ -5,11 +5,11 @@ from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters.state import State, StatesGroup
 from sqlalchemy.ext.asyncio import AsyncSession
 from bot_config import dp
-from util.string_resources import BACK_BUTTON, SEND_LINK_BUTTON
+from util import BACK_BUTTON, SEND_LINK_BUTTON
 from keyboards import make_order_keyboard
-from handlers.default_handlers import back_to_main_menu
+from handlers import back_to_main_menu
 
-from data.order_links import add_order_link
+from data import add_order_link
 
 
 class Wait_link(StatesGroup):

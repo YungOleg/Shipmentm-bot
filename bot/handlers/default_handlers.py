@@ -1,7 +1,7 @@
 from aiogram import types
 from aiogram.dispatcher.filters import Text, Command
 from bot_config import dp
-from util.string_resources import START_ANSWER, BACK_BUTTON, HELP_ANSWER
+from util import START_ANSWER, BACK_BUTTON, HELP_ANSWER
 from keyboards import main_keyboard
 
 

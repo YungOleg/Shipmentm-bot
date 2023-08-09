@@ -12,7 +12,7 @@ __all__ = [
 from .main_keyboard import main_keyboard
 from .consultation_keyboard import consultation_keyboard
 from .make_order_keyboard import make_order_keyboard
-
-# TODO: доделать клавиатуры 
 from .admin_keyboard import admin_keyboard
+
+# TODO переделать клавиатуру
 from .calculate_cost_keyboard import calculate_cost_keyboard

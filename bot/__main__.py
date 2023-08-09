@@ -1,11 +1,11 @@
 import asyncio
 from aiogram import executor
+from aiogram.types import BotCommand
 from util import POSTGRESQL_URL
 from bot_config import dp, bot
 from log_config import log
 # from middleware.currency_parser import parse_rub #? переместить в user(calculate cost)
 from util.commands_description import COMMANDS_DESCRIPRION
-from aiogram.types import BotCommand
 
 from handlers import *
 from data import BaseModel, OrderLinks, create_async_engine, processed_schemas, get_session_maker
