@@ -3,3 +3,4 @@ venv
 .todo
 **/__pycache__
 .vscode
+bot/data/migrations
