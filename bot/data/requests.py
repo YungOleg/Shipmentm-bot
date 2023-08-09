@@ -1,7 +1,7 @@
 from .models import OrderLinks
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.future import select
-from log_config import log
+# from log_config import log
 
 
 async def add_order_link(user_id: int, link: str, user_name: str, session_maker: sessionmaker) -> None:
@@ -15,7 +15,8 @@ async def add_order_link(user_id: int, link: str, user_name: str, session_maker:
             try:
                 session.add(new_order)
             except Exception as e:
-                log.info(e)
+                # log.info(e)
+                ...
 
 
 async def get_unpaid_orders(session_maker: sessionmaker):

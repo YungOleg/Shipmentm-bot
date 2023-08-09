@@ -12,10 +12,11 @@ def create_async_engine(url: URL) -> AsyncEngine:
         pool_pre_ping=True
     )
 
-
+@DeprecationWarning
 async def processed_schemas(engine: AsyncEngine, metadata) -> None:
-    async with engine.connect() as conn:
-        await conn.run_sync(metadata.create_all)
+    # async with engine.begin() as conn:
+    #     await conn.run_sync(metadata.create_all)
+    ...
 
 
 def get_session_maker(engine: AsyncEngine) -> sessionmaker:

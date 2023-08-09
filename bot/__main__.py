@@ -4,7 +4,6 @@ from aiogram.types import BotCommand
 from util import POSTGRESQL_URL
 from bot_config import dp, bot
 from log_config import log
-# from middleware.currency_parser import parse_rub #? переместить в user(calculate cost)
 from util.commands_description import COMMANDS_DESCRIPRION
 
 from handlers import *
@@ -24,7 +23,7 @@ async def start_bot() -> None:
     
     async_engine = create_async_engine(POSTGRESQL_URL)
     session_maker = get_session_maker(async_engine)
-    await processed_schemas(async_engine, BaseModel.metadata)
+    # await processed_schemas(async_engine, BaseModel.metadata)
     
     
     await bot.delete_webhook(drop_pending_updates=True)
