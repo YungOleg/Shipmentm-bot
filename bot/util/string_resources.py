@@ -3,6 +3,9 @@ from typing import Final
 START_ANSWER: Final = """
 Обработка команды start
 """
+HELP_ANSWER: Final = """
+Обработка команды help
+"""
 BACK_BUTTON: Final = "Назад"
 MAKE_ORDER_BUTTON: Final = "Сделать заказ"
 CONSULTATION_BUTTON: Final = "Консультация"

@@ -4,7 +4,7 @@ from util import POSTGRESQL_URL
 from bot_config import dp, bot
 from log_config import log
 # from middleware.currency_parser import parse_rub #? переместить в user(calculate cost)
-from handlers.user.commands_description import COMMANDS_DESCRIPRION
+from util.commands_description import COMMANDS_DESCRIPRION
 from aiogram.types import BotCommand
 
 from handlers import *
@@ -14,11 +14,6 @@ from data import BaseModel, OrderLinks, create_async_engine, processed_schemas, 
 async def on_startup(_):
     log.info("Bot is running")
 
-# # ! Функция для теста обращения к апи
-# @dp.message_handler(commands=['getdata'])
-# async def test_parser(message: types.Message):
-#     test = await parse_rub()
-#     await message.answer(f"test: {test}")
 
 async def start_bot() -> None:
     cmd_description = [
@@ -31,6 +26,8 @@ async def start_bot() -> None:
     session_maker = get_session_maker(async_engine)
     await processed_schemas(async_engine, BaseModel.metadata)
     
+    
+    await bot.delete_webhook(drop_pending_updates=True)
     await dp.start_polling(
         bot,
         # session_maker=session_maker
