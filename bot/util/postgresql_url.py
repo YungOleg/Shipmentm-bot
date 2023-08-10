@@ -4,6 +4,7 @@ from util import (
     DB_PASSWORD, DB_NAME, DB_PORT, DB_HOST
     )
 
+# TODO переместить создание урла в константы
 
 POSTGRESQL_URL = URL.create(
     drivername=DRIVER_NAME,

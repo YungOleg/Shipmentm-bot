@@ -13,16 +13,16 @@ def create_async_engine(url: Union[URL, str]) -> AsyncEngine:
         future=True
     )
 
-# @DeprecationWarning
+@DeprecationWarning
 async def processed_schemas(engine: AsyncEngine, metadata) -> None:
-    async with engine.begin() as conn:
-        await conn.run_sync(metadata.create_all)
-    # ...
+    # async with engine.begin() as conn:
+    #     await conn.run_sync(metadata.create_all)
+    ...
 
 
 def get_session_maker(engine: AsyncEngine) -> sessionmaker:
     return sessionmaker(
-        engine=engine,
+        engine,
         class_=AsyncSession,
         expire_on_commit=False
     )
