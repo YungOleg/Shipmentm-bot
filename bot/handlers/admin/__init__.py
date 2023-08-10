@@ -1,1 +1,3 @@
-from .admin import *
+__all__ = ["admin_menu"]
+
+from .admin import admin_menu

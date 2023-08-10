@@ -1,5 +1,5 @@
 import validators
-from aiogram import types
+from aiogram import types, Router
 from aiogram.dispatcher.filters import Text
 from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters.state import State, StatesGroup
@@ -11,6 +11,9 @@ from handlers import back_to_main_menu
 
 from data import add_order_link
 
+# TODO переделать файл в соответствии с bot template + убрать роутер
+
+router = Router(name="url_reciver")
 
 class Wait_link(StatesGroup):
     waiting_for_link = State()

@@ -3,5 +3,4 @@ venv
 .todo
 **/__pycache__
 .vscode
-bot/data/migrations
-alembic.ini
+alembic/migrations
