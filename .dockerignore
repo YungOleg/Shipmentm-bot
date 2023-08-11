@@ -1,0 +1,40 @@
+# Основные файлы и папки, которые обычно не нужно включать в образ Docker
+
+# Python cache и временные файлы
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Исключение виртуального окружения (если используется)
+venv/
+.venv/
+pyenv/
+.env
+
+# Логи и файлы отладки
+*.log
+*.swp
+
+# Файлы проекта для систем контроля версий
+.git/
+.gitignore
+.gitattributes
+
+# Файлы настроек IDE
+.idea/
+.vscode/
+
+# Файлы для тестирования
+test_*.py
+*_test.py
+
+# Файлы VS Code
+.vscode/
+.settings/
+*.code-workspace
+.history/
+
+# Кэш и временные файлы VS Code
+.vscode-server/
+.history/

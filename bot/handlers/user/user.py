@@ -35,13 +35,14 @@ async def calculate_cost(message: Message):
     """
     await message.answer(CALCULATE_COST_BUTTON, reply_markup=consultation_keyboard)
 
-# ! переделать функции ниже
+
+# TODO сделать обработку ссылки
 async def send_link(message: Message, state: FSMContext):
     """
         Функция для приема ссылок от пользователей
     """
-    await state.set_state(WaitLink.waiting_for_link)
-    await message.answer(SEND_LINK_BUTTON, reply_markup=make_order_keyboard)
+    await state.set_state(WaitLink.process_for_link)
+    await message.answer("Укажи ссылку на товар", reply_markup=make_order_keyboard)
 
 
 async def process_link(message: Message, state: FSMContext, session_maker: AsyncSession):
@@ -61,3 +62,4 @@ async def process_link(message: Message, state: FSMContext, session_maker: Async
     else:
         await message.answer('Некорректная ссылка! Отправьте ссылку заново')
         await state.set_state(WaitLink.waiting_for_link)
+
