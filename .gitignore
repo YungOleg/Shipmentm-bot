@@ -3,4 +3,3 @@ venv
 .todo
 **/__pycache__
 .vscode
-alembic/migrations
