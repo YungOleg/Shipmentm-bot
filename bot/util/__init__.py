@@ -6,7 +6,6 @@ __all__ = [
     "MAKE_ORDER_BUTTON", "CONSULTATION_BUTTON",
     "FAQ_BUTTON", "CALCULATE_COST_BUTTON", "SEND_LINK_BUTTON", "POSTGRESQL_URL",
     "COMMANDS_DESCRIPRION",
-    "admin",
     "FAQ_ANSWER", "VIEW_ALL_ORDERS_BUTTON", 
     "VIEW_PAID_ORDERS_BUTTON", "VIEW_UNPAID_ORDERS_BUTTON"
     ]
@@ -25,5 +24,4 @@ from .string_resources import (
     VIEW_PAID_ORDERS_BUTTON, VIEW_UNPAID_ORDERS_BUTTON
     )
 from .postgresql_url import POSTGRESQL_URL
-from .chek_admin import admin
 from .commands_description import COMMANDS_DESCRIPRION

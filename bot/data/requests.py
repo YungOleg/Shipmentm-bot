@@ -27,3 +27,13 @@ async def get_unpaid_orders(session_maker: sessionmaker):
                     .where(OrderLinks.is_paid == False)
             )
             return result.all()
+
+
+async def get_paid_orders(session_maker: sessionmaker):
+    async with session_maker() as session:
+        async with session.begin():
+            result = await session.execute(
+                select(OrderLinks.link, OrderLinks.user_name)
+                    .where(OrderLinks.is_paid == True)
+            )
+            return result.all()

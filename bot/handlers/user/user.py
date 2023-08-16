@@ -1,4 +1,5 @@
-import validators
+# import validators
+from validators import url
 from aiogram.types import Message
 from aiogram.dispatcher.fsm.context import FSMContext
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -12,6 +13,7 @@ from states import WaitLink
 
 # TODO сделать обработку кнопки faq
 # TODO сделать обработку кнопки calculate_cost
+# TODO сделать возможность просматривать свои заказы (инлайн кнопка)
 
 
 async def make_order(message: Message):
@@ -47,19 +49,36 @@ async def send_link(message: Message, state: FSMContext):
 
 async def process_link(message: Message, state: FSMContext, session_maker: AsyncSession):
     link = message.text
-    if link == BACK_BUTTON:
-        await state.clear()
-        return await back_to_main_menu(message)
-    if validators.url(link):
-        await message.answer('Ссылка успешно отправлена!')
-        await add_order_link(
-            user_id=message.from_user.id,
-            link=link,
-            user_name=message.from_user.username,
-            session_maker=session_maker
-        )
-        await state.clear()
-    else:
-        await message.answer('Некорректная ссылка! Отправьте ссылку заново')
-        await state.set_state(WaitLink.waiting_for_link)
+    match link:
+        case "Назад":
+            await state.clear()
+            return await back_to_main_menu(message)
+        case url(link):
+            await message.answer('Ссылка успешно отправлена!')
+            await add_order_link(
+                user_id=message.from_user.id,
+                link=link,
+                user_name=message.from_user.username,
+                session_maker=session_maker
+            )
+            await state.clear()
+        case _:
+            await message.answer('Некорректная ссылка! Отправьте ссылку заново')
+            await state.set_state(WaitLink.waiting_for_link)
+    
+    # if link == BACK_BUTTON:
+    #     await state.clear()
+    #     return await back_to_main_menu(message)
+    # if validators.url(link):
+    #     await message.answer('Ссылка успешно отправлена!')
+    #     await add_order_link(
+    #         user_id=message.from_user.id,
+    #         link=link,
+    #         user_name=message.from_user.username,
+    #         session_maker=session_maker
+    #     )
+    #     await state.clear()
+    # else:
+    #     await message.answer('Некорректная ссылка! Отправьте ссылку заново')
+    #     await state.set_state(WaitLink.waiting_for_link)
 
