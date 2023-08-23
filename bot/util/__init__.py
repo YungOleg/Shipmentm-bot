@@ -1,7 +1,5 @@
 __all__ = [
-    "TOKEN", "ADMIN_ID", "URL",
-    "DRIVER_NAME", "DB_USER", "DB_HOST",
-    "DB_PASSWORD", "DB_NAME", "DB_PORT",
+    "TOKEN", "ADMIN_ID",
     "START_ANSWER", "BACK_BUTTON", "HELP_ANSWER",
     "MAKE_ORDER_BUTTON", "CONSULTATION_BUTTON",
     "FAQ_BUTTON", "CALCULATE_COST_BUTTON", "SEND_LINK_BUTTON", "POSTGRESQL_URL",
@@ -12,8 +10,7 @@ __all__ = [
 
 from .constants import (
     TOKEN, 
-    ADMIN_ID, URL, DRIVER_NAME, DB_USER, 
-    DB_PASSWORD, DB_NAME, DB_PORT, DB_HOST
+    ADMIN_ID, POSTGRESQL_URL
     )
 from .string_resources import (
     START_ANSWER, HELP_ANSWER,
@@ -23,5 +20,4 @@ from .string_resources import (
     FAQ_ANSWER, VIEW_ALL_ORDERS_BUTTON, 
     VIEW_PAID_ORDERS_BUTTON, VIEW_UNPAID_ORDERS_BUTTON
     )
-from .postgresql_url import POSTGRESQL_URL
 from .commands_description import COMMANDS_DESCRIPRION

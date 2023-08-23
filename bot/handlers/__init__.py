@@ -26,13 +26,14 @@ def register_handlers(router: Router):
     router.message.register(help, Command(commands=["help"]))
     router.message.register(back_to_main_menu, Text(text=BACK_BUTTON), any_state)
     # * user commands
-    router.message.register(make_order, Text(text=MAKE_ORDER_BUTTON))
+    router.message.register(make_order, Text(text=MAKE_ORDER_BUTTON), any_state)
     router.message.register(calculate_cost, Text(text=CALCULATE_COST_BUTTON))
     router.message.register(faq, Text(text=FAQ_BUTTON))
     router.message.register(consultation, Text(text=CONSULTATION_BUTTON))
     # * register fsm commands
-    router.message.register(process_link, WaitLink.process_for_link)
-    router.message.register(send_link, Text(text=SEND_LINK_BUTTON), WaitLink.waiting_for_link)
+    router.message.register(process_link, WaitLink.waiting_for_send_link)
+    router.message.register(send_link, Text(text=SEND_LINK_BUTTON))
     # * admin commands
     router.message.register(admin_menu, Command(commands=["admin"]), F.from_user.id == int(ADMIN_ID))
-    router.message.register(get_paid_order_to_admin, Command(commands=["get_orders"]), F.from_user.id == int(ADMIN_ID))
+    router.callback_query.register(get_paid_order_to_admin, Text(text=...), F.from_user.id == int(ADMIN_ID))
+    router.callback_query.register(get_paid_order_to_admin, Text(text=...), F.from_user.id == int(ADMIN_ID))

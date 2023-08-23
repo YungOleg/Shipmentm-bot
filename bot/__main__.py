@@ -1,6 +1,6 @@
 import asyncio
 from aiogram.types import BotCommand
-from aiogram import Bot, Dispatcher, Router
+from aiogram import Bot, Dispatcher
 from aiogram.dispatcher.fsm.storage.memory import MemoryStorage
 
 from util import COMMANDS_DESCRIPRION, TOKEN, POSTGRESQL_URL
@@ -10,20 +10,17 @@ from handlers import register_handlers
 from data import BaseModel, create_async_engine, processed_schemas, get_session_maker
 from log_config import log
 
-async def on_startup(_):
-    log.info("Bot is running")
-
 
 async def start_bot() -> None:
     storage = MemoryStorage()
     bot = Bot(TOKEN)
     dp = Dispatcher(storage=storage)
     
+    # * Регистрация подсказок с командами
     cmd_description = [
         BotCommand(command=cmd[0], description=cmd[1]) for cmd in COMMANDS_DESCRIPRION
         ]
     await bot.set_my_commands(commands=cmd_description)
-    # * создание
     
     dp.message.middleware(DBSessionMiddleware())
     

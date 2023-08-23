@@ -23,17 +23,19 @@ async def get_unpaid_orders(session_maker: sessionmaker):
     async with session_maker() as session:
         async with session.begin():
             result = await session.execute(
-                select(OrderLinks.link, OrderLinks.user_name)
+                select(OrderLinks.link, OrderLinks.user_name, OrderLinks.order_time)
                     .where(OrderLinks.is_paid == False)
             )
-            return result.all()
+            full_result = [(link, user_name, order_time.strftime('%d.%m.%Y')) for link, user_name, order_time in result.all()]
+            return full_result
 
 
 async def get_paid_orders(session_maker: sessionmaker):
     async with session_maker() as session:
         async with session.begin():
             result = await session.execute(
-                select(OrderLinks.link, OrderLinks.user_name)
+                select(OrderLinks.link, OrderLinks.user_name, OrderLinks.order_time)
                     .where(OrderLinks.is_paid == True)
             )
-            return result.all()
+            full_result = [(link, user_name, order_time.strftime('%d.%m.%Y')) for link, user_name, order_time in result.all()]
+            return full_result
