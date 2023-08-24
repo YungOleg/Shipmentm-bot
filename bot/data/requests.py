@@ -3,6 +3,7 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.future import select
 # from log_config import log
 
+# TODO сделать функцию удаления заказа
 
 async def add_order_link(user_id: int, link: str, user_name: str, session_maker: sessionmaker) -> None:
     async with session_maker() as session:
@@ -39,3 +40,24 @@ async def get_paid_orders(session_maker: sessionmaker):
             )
             full_result = [(link, user_name, order_time.strftime('%d.%m.%Y')) for link, user_name, order_time in result.all()]
             return full_result
+
+
+async def select_all(session_maker: sessionmaker):
+    async with session_maker() as session:
+        async with session.begin():
+            result = await session.execute(
+                select(OrderLinks.link, OrderLinks.is_paid, OrderLinks.order_time, OrderLinks.user_id, OrderLinks.user_name)
+            )
+            full_result = [
+                (link, "Paid" if is_paid else "Unpaid", order_time.strftime('%d.%m.%Y %H:%M:%S'), user_id, user_name)
+                for link, is_paid, order_time, user_id, user_name in result.all()
+            ]
+            return full_result
+
+
+async def delete_order_by_id(session_maker: sessionmaker, id: int):
+    ...
+
+
+async def change_is_paid(session_maker: sessionmaker, user_name: str):
+    ...

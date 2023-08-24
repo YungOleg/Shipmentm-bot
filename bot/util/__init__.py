@@ -5,7 +5,8 @@ __all__ = [
     "FAQ_BUTTON", "CALCULATE_COST_BUTTON", "SEND_LINK_BUTTON", "POSTGRESQL_URL",
     "COMMANDS_DESCRIPRION",
     "FAQ_ANSWER", "VIEW_ALL_ORDERS_BUTTON", 
-    "VIEW_PAID_ORDERS_BUTTON", "VIEW_UNPAID_ORDERS_BUTTON"
+    "VIEW_PAID_ORDERS_BUTTON", "VIEW_UNPAID_ORDERS_BUTTON",
+    "AdminCD", "AdminCDAction"
     ]
 
 from .constants import (
@@ -21,3 +22,4 @@ from .string_resources import (
     VIEW_PAID_ORDERS_BUTTON, VIEW_UNPAID_ORDERS_BUTTON
     )
 from .commands_description import COMMANDS_DESCRIPRION
+from .cb_data import AdminCD, AdminCDAction
