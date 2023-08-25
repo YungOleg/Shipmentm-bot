@@ -1,0 +1,22 @@
+version: '3.7'
+services:
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_PASSWORD: # your database password
+      POSTGRES_USER: # your database user
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    restart: on-failure
+    ports:
+      - "5432:5432"
+  bot:
+    build: .
+    restart: "unless-stopped"
+    env_file:
+      - ./.env # rename .evn.example -> .env in this directory
+    depends_on: 
+      - db
+
+volumes:
+  pgdata:
