@@ -3,21 +3,22 @@ services:
   db:
     image: postgres:15
     environment:
-      POSTGRES_PASSWORD: # your database password
-      POSTGRES_USER: # your database user
+      POSTGRES_PASSWORD: # your Database password
+      POSTGRES_USER: # your Database user
+      POSTGRES_DB: # your Database name
     volumes:
       - pgdata:/var/lib/postgresql/data
     restart: on-failure
     ports:
-      - "5432:5432"
+      - "5433:5433"
   bot:
     build: .
-    restart: "unless-stopped"
+    command: sh -c "alembic upgrade head && python bot/__main__.py"
+    restart: unless-stopped
     env_file:
-      - ./.env # rename .evn.example -> .env in this directory
+      - ./.env # rename .env.example -> .env 
     depends_on: 
       - db
-
 
 volumes:
   pgdata:

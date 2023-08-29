@@ -25,6 +25,8 @@ async def start_bot() -> None:
     dp.message.middleware(DBSessionMiddleware())
     
     register_handlers(dp)
+    # PG_URL = "postgresql+asyncpg://postgres:yungoleg1017@localhost/ShipM"
+    # async_engine = create_async_engine(PG_URL)
     
     async_engine = create_async_engine(POSTGRESQL_URL)
     session_maker = get_session_maker(async_engine)
@@ -38,6 +40,7 @@ async def start_bot() -> None:
 
 if __name__ == "__main__":
     try:
+        log.info("Bot is started")
         asyncio.run(start_bot())
     except (KeyboardInterrupt, SystemExit):
         log.info("Bot was stopped")

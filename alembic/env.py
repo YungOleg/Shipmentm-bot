@@ -7,13 +7,11 @@ from sqlalchemy.ext.asyncio import async_engine_from_config
 
 from alembic import context
 
-from dotenv import load_dotenv
-from os import getenv
+from bot.util import POSTGRESQL_URL
 import bot.data
 
 # load environment variables (database url)
-load_dotenv()
-url = getenv("DATABASE_URL")
+# url = "postgresql+asyncpg://postgres:yungoleg1017@localhost/ShipM"
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -29,6 +27,9 @@ if config.config_file_name is not None:
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
 target_metadata = bot.data.BaseModel.metadata
+
+
+config.set_main_option('sqlalchemy.url', POSTGRESQL_URL)
 
 # other values from the config, defined by the needs of env.py,
 # can be acquired:
@@ -48,8 +49,10 @@ def run_migrations_offline() -> None:
     script output.
 
     """
+    pg_url = config.get_main_option("sqlalchemy.url")
+    
     context.configure(
-        url=url,
+        url=pg_url,
         target_metadata=target_metadata,
         literal_binds=True,
         dialect_opts={"paramstyle": "named"},
@@ -93,4 +96,5 @@ def run_migrations_online() -> None:
 if context.is_offline_mode():
     run_migrations_offline()
 else:
-    run_migrations_online()
+    # asyncio.run(run_migrations_online())
+    asyncio.run(run_async_migrations())
