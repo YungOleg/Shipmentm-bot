@@ -1,13 +1,15 @@
 # import validators
 from validators import url
-from aiogram.types import Message
+from aiogram.types import Message, CallbackQuery
 from aiogram.dispatcher.fsm.context import FSMContext
 from sqlalchemy.ext.asyncio import AsyncSession
 from handlers import back_to_main_menu
 from data import add_order_link
-from keyboards import make_order_keyboard, consultation_keyboard
-from util import (MAKE_ORDER_BUTTON, CONSULTATION_BUTTON, 
-                  FAQ_BUTTON, CALCULATE_COST_BUTTON)
+from keyboards import make_order_keyboard, consultation_keyboard, faq_keyboard
+from util import (
+    MAKE_ORDER_BUTTON, CONSULTATION_BUTTON, 
+    FAQ_BUTTON, CALCULATE_COST_BUTTON, FAQ_ANSWER
+    )
 from util import BACK_BUTTON, SEND_LINK_BUTTON
 from states import WaitLink
 
@@ -23,13 +25,12 @@ async def make_order(message: Message):
 
 async def consultation(message: Message):
     await message.answer(CONSULTATION_BUTTON, reply_markup=consultation_keyboard)
+    await message.answer("Часто задаваемые вопросы", reply_markup= faq_keyboard)
 
 
-async def faq(message: Message):
-    """
-        Функция для отправки сообщения админу с вопросом
-    """
-    await message.answer(FAQ_BUTTON, reply_markup=consultation_keyboard)
+async def faq_callback(call: CallbackQuery):
+    await call.message.answer(FAQ_ANSWER)
+    await call.answer()
 
 
 async def calculate_cost(message: Message):

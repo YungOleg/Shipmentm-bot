@@ -23,24 +23,25 @@ async def start_bot() -> None:
     await bot.set_my_commands(commands=cmd_description)
     
     dp.message.middleware(DBSessionMiddleware())
-    
     register_handlers(dp)
-    # PG_URL = "postgresql+asyncpg://postgres:yungoleg1017@localhost/ShipM"
-    # async_engine = create_async_engine(PG_URL)
     
     async_engine = create_async_engine(POSTGRESQL_URL)
     session_maker = get_session_maker(async_engine)
-    
-    
     # * await processed_schemas(async_engine, BaseModel.metadata)
     
     await bot.delete_webhook(drop_pending_updates=True)
     await dp.start_polling(bot, session_maker=session_maker)
 
 
-if __name__ == "__main__":
+def main() -> None:
     try:
-        log.info("Bot is started")
         asyncio.run(start_bot())
     except (KeyboardInterrupt, SystemExit):
-        log.info("Bot was stopped")
+        pass
+    except Exception as e:
+        log.exception(f"Exception: {e}")
+
+
+if __name__ == "__main__":
+    # python bot/__main__.py
+    main()

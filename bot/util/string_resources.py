@@ -7,7 +7,7 @@ HELP_ANSWER: Final = """
 Обработка команды help
 """
 FAQ_ANSWER: Final = """
-Часто задаваемые вопросы
+Часто задаваемые вопросы: ...
 """
 BACK_BUTTON: Final = "Назад"
 MAKE_ORDER_BUTTON: Final = "Сделать заказ"

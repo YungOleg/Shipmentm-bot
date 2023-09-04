@@ -9,16 +9,18 @@ from util import (
     AdminCD, AdminCDAction
 )
 
-from states import WaitLink
+from states import WaitLink, WaitUsernameForDelete, WaitUsernameForChange
 from .default_handlers import start, help, back_to_main_menu
 from .admin import (
     admin_menu, get_paid_order_to_admin, 
-    get_unpaid_order_to_admin, change_is_paid, 
-    delete_order_by_id, select_all, close_admin
+    get_unpaid_order_to_admin, admin_change_is_paid, 
+    admin_delete_order_by_username, view_all_orders, close_admin,
+    wait_username_for_delete, wait_username_for_change
     )
 from .user import (
     make_order, calculate_cost, 
-    faq, consultation, process_link, send_link
+    consultation, process_link, 
+    send_link, faq_callback
     )
 
 __all__ = ["register_handlers"]
@@ -31,9 +33,9 @@ def register_handlers(router: Router):
     # * user commands
     router.message.register(make_order, Text(text=MAKE_ORDER_BUTTON), any_state)
     router.message.register(calculate_cost, Text(text=CALCULATE_COST_BUTTON))
-    router.message.register(faq, Text(text=FAQ_BUTTON))
     router.message.register(consultation, Text(text=CONSULTATION_BUTTON))
-    # * register fsm commands
+    router.callback_query.register(faq_callback, F.data == "faq")
+    # * register user fsm commands
     router.message.register(process_link, WaitLink.waiting_for_send_link)
     router.message.register(send_link, Text(text=SEND_LINK_BUTTON))
     # * admin commands
@@ -49,23 +51,34 @@ def register_handlers(router: Router):
         AdminCD.filter(F.action == AdminCDAction.VIEW_UNPAID_ORDERS), 
         F.from_user.id == int(ADMIN_ID)
         )
-    # router.callback_query.register(
-    #     select_all, 
-    #     AdminCD.filter(F.action == AdminCDAction.VIEW_ALL_ORDERS), 
-    #     F.from_user.id == int(ADMIN_ID)
-    #     )
+    router.callback_query.register(
+        view_all_orders,
+        AdminCD.filter(F.action == AdminCDAction.VIEW_ALL_ORDERS), 
+        F.from_user.id == int(ADMIN_ID)
+    )
     router.callback_query.register(
         close_admin, 
         AdminCD.filter(F.action == AdminCDAction.CLOSE),
         F.from_user.id == int(ADMIN_ID)
         )
-    # router.callback_query.register(
-    #     change_is_paid, 
-    #     AdminCD.filter(F.action == AdminCDAction.CHANGE_IS_PAID), 
-    #     F.from_user.id == int(ADMIN_ID)
-    #     ) #! need fsm
-    # router.callback_query.register(
-    #     delete_order_by_id, 
-    #     AdminCD.filter(F.action == AdminCDAction.DELETE_ORDER), 
-    #     F.from_user.id == int(ADMIN_ID)
-    #     ) #! need fsm
+    router.callback_query.register(
+        wait_username_for_change, 
+        AdminCD.filter(F.action == AdminCDAction.CHANGE_IS_PAID), 
+        F.from_user.id == int(ADMIN_ID)
+        )
+    router.callback_query.register(
+        wait_username_for_delete, 
+        AdminCD.filter(F.action == AdminCDAction.DELETE_ORDER), 
+        F.from_user.id == int(ADMIN_ID)
+        )
+    # * register admin fsm commands
+    router.message.register(
+        admin_change_is_paid, 
+        WaitUsernameForChange.waiting_for_send_username,
+        F.from_user.id == int(ADMIN_ID)
+    )
+    router.message.register(
+        admin_delete_order_by_username,
+        WaitUsernameForDelete.waiting_for_send_username,
+        F.from_user.id == int(ADMIN_ID)
+    )

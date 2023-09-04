@@ -55,8 +55,15 @@ async def select_all(session_maker: sessionmaker):
             return full_result
 
 
-async def delete_order_by_id(session_maker: sessionmaker, id: int):
-    ...
+async def delete_order_by_username(session_maker: sessionmaker, user_name: str):
+    async with session_maker() as session:
+        async with session.begin():
+            try:
+                order_to_delete = session.query(OrderLinks).filter_by(user_name=user_name).first()
+                if order_to_delete:
+                    session.delete(order_to_delete)
+            except Exception:
+                pass
 
 
 async def change_is_paid(session_maker: sessionmaker, user_name: str):
