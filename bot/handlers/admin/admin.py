@@ -8,7 +8,8 @@ from data import (
     get_paid_orders, select_all, 
     delete_order_by_username, change_is_paid
     )
-from states import WaitUsernameForDelete, WaitUsernameForChange
+from states import WaitIdForChange, WaitIdForDelete
+from ...data.requests import change_is_paid
 
 # TODO сделать возможность смены статуса покупки (is_paid) поле
 # TODO сделать возможность удаления заказа(в случае некорректного)
@@ -39,19 +40,20 @@ async def get_paid_order_to_admin(call: CallbackQuery, session_maker: AsyncSessi
 
 
 async def wait_id_for_delete(call: CallbackQuery, state: FSMContext):
-    await state.set_state(WaitUsernameForDelete.waiting_for_send_username)
+    await state.set_state(WaitIdForDelete.waiting_for_send_id)
     await call.message.answer("Отправь id заказа, чтобы его удалить")
     await call.answer()
 
 
-async def wait_username_for_change(call: CallbackQuery, state: FSMContext):
-    await state.set_state(WaitUsernameForChange.waiting_for_send_username)
-    await call.message.answer("Отправь username пользователя\r\n Удаляться все заказы пользователя с этим username")
+async def wait_id_for_change(call: CallbackQuery, state: FSMContext):
+    await state.set_state(WaitIdForChange.waiting_for_send_id)
+    await call.message.answer("Отправь username пользователя\r\n")
     await call.answer()
 
 
 async def admin_change_is_paid(message: Message, state: FSMContext, session_maker: AsyncSession):
-    ...
+    # TODO: дописать fsm для удаления
+    await change_is_paid(session_maker=session_maker, id=id)
 
 
 async def admin_delete_order_by_id(message: Message, state: FSMContext, session_maker: AsyncSession):

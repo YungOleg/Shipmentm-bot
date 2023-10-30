@@ -9,13 +9,13 @@ from util import (
     AdminCD, AdminCDAction
 )
 
-from states import WaitLink, WaitUsernameForDelete, WaitUsernameForChange
+from states import WaitLink, WaitIdForChange, WaitIdForDelete
 from .default_handlers import start, help, back_to_main_menu
 from .admin import (
     admin_menu, get_paid_order_to_admin, 
     get_unpaid_order_to_admin, admin_change_is_paid, 
     admin_delete_order_by_id, view_all_orders, close_admin,
-    wait_id_for_delete, wait_username_for_change
+    wait_id_for_delete, wait_id_for_change
     )
 from .user import (
     make_order, calculate_cost, 
@@ -66,7 +66,7 @@ def register_handlers(router: Router):
         F.from_user.id == int(ADMIN_ID)
         )
     router.callback_query.register(
-        wait_username_for_change, 
+        wait_id_for_change, 
         AdminCD.filter(F.action == AdminCDAction.CHANGE_IS_PAID), 
         F.from_user.id == int(ADMIN_ID)
         )
@@ -78,11 +78,11 @@ def register_handlers(router: Router):
     # * register admin fsm commands
     router.message.register(
         admin_change_is_paid, 
-        WaitUsernameForChange.waiting_for_send_username,
+        WaitIdForChange.waiting_for_send_id,
         F.from_user.id == int(ADMIN_ID)
     )
     router.message.register(
         admin_delete_order_by_id,
-        WaitUsernameForDelete.waiting_for_send_username,
+        WaitIdForDelete.waiting_for_send_id,
         F.from_user.id == int(ADMIN_ID)
     )

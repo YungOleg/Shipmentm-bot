@@ -1,5 +1,5 @@
-__all__ = ["WaitLink", "WaitUsernameForDelete", "WaitUsernameForChange"]
+__all__ = ["WaitLink", "WaitIdForDelete", "WaitIdForChange"]
 
 from .wait_link import WaitLink
-from .wait_username_for_delete import WaitUsernameForDelete
-from .wait_username_for_change import WaitUsernameForChange
+from .wait_id_for_delete import WaitIdForDelete
+from .wait_id_for_change import WaitIdForChange

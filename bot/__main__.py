@@ -43,5 +43,6 @@ def main() -> None:
 
 
 if __name__ == "__main__":
+    # TODO: добавить кнопку запроса трек номера
     # python bot/__main__.py
     main()

@@ -75,5 +75,10 @@ async def delete_order_by_id(session_maker: sessionmaker, id: int):
     ...
 
 
-async def change_is_paid(session_maker: sessionmaker, user_name: str):
-    ...
+async def change_is_paid(session_maker: sessionmaker, id: id):
+    async with session_maker() as session:
+        async with session.begin():
+            result = await session.execute(
+                select(OrderLinks.link, OrderLinks.user_name, OrderLinks.order_time, OrderLinks.id)
+                    .filter(OrderLinks.id == id).update({'is_paid': True})
+            )

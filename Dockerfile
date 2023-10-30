@@ -1,4 +1,4 @@
-FROM python:3.11.4
+FROM python:3.10-slim
 WORKDIR /app
 COPY requirements.txt requirements.txt
 RUN pip install --upgrade setuptools
@@ -7,3 +7,4 @@ COPY . .
 # RUN alembic revision --m "main" --autogenerate
 # RUN alembic upgrade head
 # CMD ["python", "bot/__main__.py"]
+ENTRYPOINT ["bot/__main__.py"]
