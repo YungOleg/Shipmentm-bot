@@ -11,6 +11,7 @@ class OrderLinks(BaseModel):
     order_time = Column(DateTime(timezone=True), default=func.now(), nullable=False)
     user_id = Column(Integer, nullable=False)
     user_name = Column(String(255), nullable=False)
+    order_comment = Column(String(255), nullable=True)
     
     def __str__(self) -> str:
         return f"User: {self.id}, username: {self.user_name}"

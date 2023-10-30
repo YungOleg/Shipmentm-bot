@@ -23,6 +23,18 @@ async def make_order(message: Message):
     await message.answer(MAKE_ORDER_BUTTON, reply_markup=make_order_keyboard)
 
 
+async def poizon_order(message: Message):
+    await message.answer("poizon", reply_markup=make_order_keyboard)
+
+
+async def tradeinn_order(message: Message):
+    await message.answer("tradeinn", reply_markup=make_order_keyboard)
+
+
+async def other_order(message: Message):
+    await message.answer("other", reply_markup=make_order_keyboard)
+
+
 async def consultation(message: Message):
     await message.answer(CONSULTATION_BUTTON, reply_markup=consultation_keyboard)
     await message.answer("Часто задаваемые вопросы", reply_markup= faq_keyboard)
